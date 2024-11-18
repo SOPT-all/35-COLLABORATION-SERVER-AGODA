@@ -23,7 +23,7 @@ public class City {
     @NotNull(message = "나라 아이디가 null이 될 수 없습니다.")
     private Long countryId;
 
-    public City() {}
+    protected City() {}
 
     private City(String name, String imageUrl, Long countryId) {
         this.name = name;
