@@ -77,7 +77,7 @@ public class Hotel {
         this.isTimeSale = builder.isTimeSale;
         this.cityId = builder.cityId;
     }
-    
+
     public static Hotel create(String hotelName, int star, String hotelDistrict, double rating, int reviewCount,
                                int originalPrice, int discountPrice, boolean isQuarterDiscount, int taxPrice,
                                boolean isLiked, int reservationCount, boolean isTimeSale, Long cityId) {
