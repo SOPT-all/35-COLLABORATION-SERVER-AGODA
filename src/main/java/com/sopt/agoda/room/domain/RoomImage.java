@@ -3,7 +3,6 @@ package com.sopt.agoda.room.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "room_images")
@@ -15,7 +14,7 @@ public class RoomImage {
 
     @Column(name = "room_image_url", nullable = false, length = 255)
     @NotBlank(message = "방 이미지 URL이 null이면 안됩니다.")
-    private String roomImageUrl;
+    private String imageUrl;
 
     @Column(name = "room_id", nullable = false)
     @NotNull(message = "방 ID가 null이면 안됩니다.")
@@ -25,7 +24,7 @@ public class RoomImage {
     }
 
     private RoomImage(final Builder builder) {
-        this.roomImageUrl = builder.roomImageUrl;
+        this.imageUrl = builder.roomImageUrl;
         this.roomId = builder.roomId;
     }
 

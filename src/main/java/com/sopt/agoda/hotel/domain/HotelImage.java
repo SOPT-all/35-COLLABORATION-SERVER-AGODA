@@ -18,14 +18,14 @@ public class HotelImage {
 
     @Column(name = "hotel_image_url", nullable = false)
     @NotBlank(message = "호텔 이미지 URL이 null이면 안됩니다.")
-    private String hotelImageUrl;
+    private String imageUrl;
 
     protected HotelImage() {
     }
 
     private HotelImage(final Builder builder) {
         this.hotelId = builder.hotelId;
-        this.hotelImageUrl = builder.hotelImageUrl;
+        this.imageUrl = builder.hotelImageUrl;
     }
 
     public static HotelImage create(final Long hotelId, final String hotelImageUrl) {
