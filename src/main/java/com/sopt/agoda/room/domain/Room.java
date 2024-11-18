@@ -10,36 +10,36 @@ import jakarta.validation.constraints.Size;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "room_id")
+    @Column(name = "room_id", nullable = false)
     private Long id;
 
-    @Column(name = "room_name")
+    @Column(name = "room_name", nullable = false)
     @NotNull(message = "방이름이 null이면 안됩니다")
     private String name;
 
-    @Column(name = "space_size")
+    @Column(name = "space_size", nullable = false)
     @NotNull(message = "방 크기가 null이면 안됩니다.")
     @Size(min = 1, message = "방 크기가 최소 1은 되어야 합니다.")
     private String spaceSize;
 
-    @Column(name = "bed_type")
+    @Column(name = "bed_type", nullable = false)
     @NotNull(message = "침대 타입이 null이면 안됩니다.")
     private String bedType;
 
-    @Column(name = "bed_count")
+    @Column(name = "bed_count", nullable = false)
     @NotNull(message = "침대 개수가 null이면 안됩니다.")
     private int bedCount;
 
-    @Column(name = "bath_info")
+    @Column(name = "bath_info", nullable = false)
     @NotBlank(message = "욕실 정보가 null이면 안됩니다.")
     private String bathInfo;
 
-    @Column(name = "max_capacity")
+    @Column(name = "max_capacity", nullable = false)
     @NotNull(message = "최대 수용인원이 null이면 안됩니다.")
     @Size(min = 1, message = "수용인원이 최소 1명은 되어야 합니다.")
     private int maxCapacity;
 
-    @Column(name = "hotel_id")
+    @Column(name = "hotel_id", nullable = false)
     @NotNull(message = "호텔 아이디가 null이면 안됩니다.")
     private Long hotelId;
 

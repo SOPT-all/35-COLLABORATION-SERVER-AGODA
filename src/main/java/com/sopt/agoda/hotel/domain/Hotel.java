@@ -9,54 +9,54 @@ import jakarta.validation.constraints.NotNull;
 public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hotel_id")
+    @Column(name = "hotel_id", nullable = false)
     private Long id;
 
-    @Column(name = "hotel_name")
+    @Column(name = "hotel_name", nullable = false)
     @NotBlank(message = "호텔 이름이 null이면 안됩니다.")
     private String hotelName;
 
-    @Column(name = "star")
+    @Column(name = "star", nullable = false)
     @NotNull(message = "별이 null이면 안됩니다.")
     private int star;
 
-    @Column(name = "hotel_district")
+    @Column(name = "hotel_district", nullable = false)
     @NotBlank(message = "호텔 지역이 null이면 안됩니다.")
     private String hotelDistrict;
 
-    @Column(name = "rating")
+    @Column(name = "rating", nullable = false)
     @NotNull(message = "평점이 null이면 안됩니다.")
     private double rating;
 
-    @Column(name = "review_count")
+    @Column(name = "review_count", nullable = false)
     @NotNull(message = "리뷰 개수가 null이면 안됩니다.")
     private int reviewCount;
 
-    @Column(name = "original_price")
+    @Column(name = "original_price", nullable = false)
     @NotNull(message = "원가격이 null이면 안됩니다.")
     private int originalPrice;
 
     @Column(name = "discount_price")
     private int discountPrice;
 
-    @Column(name = "is_quarter_discount")
+    @Column(name = "is_quarter_discount", nullable = false)
     private boolean isQuarterDiscount;
 
-    @Column(name = "tax_price")
+    @Column(name = "tax_price", nullable = false)
     @NotNull(message = "세금가격이 null이면 안됩니다.")
     private int taxPrice;
 
-    @Column(name = "is_liked")
+    @Column(name = "is_liked", nullable = false)
     private boolean isLiked;
 
-    @Column(name = "reservation_count")
+    @Column(name = "reservation_count", nullable = false)
     @NotNull(message = "예약 횟수가 null이면 안됩니다.")
     private int reservationCount;
 
-    @Column(name = "is_time_sale")
+    @Column(name = "is_time_sale", nullable = false)
     private boolean isTimeSale;
 
-    @Column(name = "city_id")
+    @Column(name = "city_id", nullable = false)
     @NotNull(message = "도시 아이디가 null이면 안됩니다.")
     private Long cityId;
 
@@ -78,9 +78,10 @@ public class Hotel {
         this.cityId = builder.cityId;
     }
 
-    public static Hotel create(String hotelName, int star, String hotelDistrict, double rating, int reviewCount,
-                               int originalPrice, int discountPrice, boolean isQuarterDiscount, int taxPrice,
-                               boolean isLiked, int reservationCount, boolean isTimeSale, Long cityId) {
+    public static Hotel create(final String hotelName, final int star, final String hotelDistrict, final double rating,
+                               final int reviewCount, final int originalPrice, final int discountPrice,
+                               final boolean isQuarterDiscount, final int taxPrice, final boolean isLiked,
+                               final int reservationCount, final boolean isTimeSale, final Long cityId) {
         return new Hotel.Builder()
                 .hotelName(hotelName)
                 .star(star)
@@ -98,7 +99,7 @@ public class Hotel {
                 .build();
     }
 
-    //빌더 클래스
+    // 빌더 클래스
     public static class Builder {
         private String hotelName;
         private int star;
@@ -119,7 +120,7 @@ public class Hotel {
             return this;
         }
 
-        public Builder star(int star) {
+        public Builder star(final int star) {
             this.star = star;
             return this;
         }
