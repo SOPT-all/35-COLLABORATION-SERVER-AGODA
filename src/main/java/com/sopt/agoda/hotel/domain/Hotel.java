@@ -77,6 +77,26 @@ public class Hotel {
         this.isTimeSale = builder.isTimeSale;
         this.cityId = builder.cityId;
     }
+    
+    public static Hotel create(String hotelName, int star, String hotelDistrict, double rating, int reviewCount,
+                               int originalPrice, int discountPrice, boolean isQuarterDiscount, int taxPrice,
+                               boolean isLiked, int reservationCount, boolean isTimeSale, Long cityId) {
+        return new Hotel.Builder()
+                .hotelName(hotelName)
+                .star(star)
+                .hotelDistrict(hotelDistrict)
+                .rating(rating)
+                .reviewCount(reviewCount)
+                .originalPrice(originalPrice)
+                .discountPrice(discountPrice)
+                .isQuarterDiscount(isQuarterDiscount)
+                .taxPrice(taxPrice)
+                .isLiked(isLiked)
+                .reservationCount(reservationCount)
+                .isTimeSale(isTimeSale)
+                .cityId(cityId)
+                .build();
+    }
 
     //빌더 클래스
     public static class Builder {
@@ -163,11 +183,4 @@ public class Hotel {
             return new Hotel(this);
         }
     }
-
-
-
-
-
-
-
 }
