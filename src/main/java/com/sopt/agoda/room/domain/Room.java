@@ -28,6 +28,7 @@ public class Room {
 
     @Column(name = "bed_count", nullable = false)
     @NotNull(message = "침대 개수가 null이면 안됩니다.")
+    @Size(min = 0, message = "최소 침대 개수는 0개입니다.")
     private int bedCount;
 
     @Column(name = "bath_info", nullable = false)

@@ -3,6 +3,7 @@ package com.sopt.agoda.hotel.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "hotels")
@@ -18,6 +19,7 @@ public class Hotel {
 
     @Column(name = "star", nullable = false)
     @NotNull(message = "별이 null이면 안됩니다.")
+    @Size(min = 0, message = "최소 별은 0입니다.")
     private int star;
 
     @Column(name = "hotel_district", nullable = false)
@@ -26,34 +28,44 @@ public class Hotel {
 
     @Column(name = "rating", nullable = false)
     @NotNull(message = "평점이 null이면 안됩니다.")
+    @Size(min = 0, message = "최소 평점은 0입니다.")
     private double rating;
 
     @Column(name = "review_count", nullable = false)
     @NotNull(message = "리뷰 개수가 null이면 안됩니다.")
+    @Size(min = 0, message = "최소 리뷰 개수는 0개입니다.")
     private int reviewCount;
 
     @Column(name = "original_price", nullable = false)
     @NotNull(message = "원가격이 null이면 안됩니다.")
+    @Size(min = 0, message = "최소 원가격은 0원입니다.")
     private int originalPrice;
 
     @Column(name = "discount_price")
+    @NotNull(message = "할인 가격이 null이면 안됩니다.")
+    @Size(min = 0, message = "최소 할인 가격은 0원입니다.")
     private int discountPrice;
 
     @Column(name = "is_quarter_discount", nullable = false)
+    @NotNull(message = "25프로 할인 여부가 null이면 안됩니다.")
     private boolean isQuarterDiscount;
 
     @Column(name = "tax_price", nullable = false)
     @NotNull(message = "세금가격이 null이면 안됩니다.")
+    @Size(min = 0, message = "최소 세금 가격은 0원입니다.")
     private int taxPrice;
 
     @Column(name = "is_liked", nullable = false)
+    @NotNull(message = "호텔 좋아요 여부가 null이면 안됩니다.")
     private boolean isLiked;
 
     @Column(name = "reservation_count", nullable = false)
     @NotNull(message = "예약 횟수가 null이면 안됩니다.")
+    @Size(min = 0, message = "최소 예약 횟수는 0입니다.")
     private int reservationCount;
 
     @Column(name = "is_time_sale", nullable = false)
+    @NotNull(message = "시간 할인 여부가 null이면 안됩니다.")
     private boolean isTimeSale;
 
     @Column(name = "city_id", nullable = false)
