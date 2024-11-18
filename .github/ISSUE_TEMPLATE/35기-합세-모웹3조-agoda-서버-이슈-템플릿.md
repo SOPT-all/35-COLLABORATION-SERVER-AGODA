@@ -1,7 +1,7 @@
 ---
 name: 35기 합세 모웹3조 AGODA 서버 이슈 템플릿
 about: Suggest an idea for this project
-title: "[~~~] ~~~"
+title: "[~] ~"
 labels: ''
 assignees: ''
 
