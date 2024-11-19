@@ -7,23 +7,31 @@ import com.sopt.agoda.common.response.BaseResponse;
 import com.sopt.agoda.common.response.code.FailMessage;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.stream.Collectors;
 
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * AgodaException
@@ -101,38 +109,66 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 404 - EntityNotFoundException
+     * 발생 이유 :  리소스를 찾을 수 없음
+     */
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<BaseResponse<?>> handleEntityNotFoundException(final EntityNotFoundException e) {
+        return ApiResponseUtil.failure(FailMessage.ENTITY_NOT_FOUND);
+    }
+
+    /**
+     * 404 - NoResourceFoundException
+     * 발생 이유 : 잘못된 엔드포인트로 요청했을 때 발생
+     */
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<BaseResponse<?>> handleNoResourceFoundException(final NoResourceFoundException e) {
+        return ApiResponseUtil.failure(FailMessage.API_NOT_FOUND);
+    }
+
+    /**
+     * 404 - NoHandlerFoundException
+     * 발생 이유 : 잘못된 api로 요청했을 때 발생
+     */
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<BaseResponse<?>> handleNoHandlerFoundException(final NoHandlerFoundException e) {
+        return ApiResponseUtil.failure(FailMessage.API_NOT_FOUND);
+    }
+
+    /**
+     * 405 - HttpRequestMethodNotSupportedException
+     * 발생 이유 : 지원하지 않는 HTTP Method로 요청했을 때, 발생
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<BaseResponse<?>> handleHttpRequestMethodNotSupportedException(final HttpRequestMethodNotSupportedException e) {
+        return ApiResponseUtil.failure(FailMessage.INVALID_REQUEST_HTTP_METHOD);
+    }
+
+    /**
      * 409 - DataIntegrityViolationException
-     * 발생 이유 - Unique Key 제약 조건 위반 or NULL 값이 들어갈 수 없는 컬럼에 NULL 삽입 or 외래 키 제약 조건 위반
+     * 발생 이유 : Unique Key 제약 조건 위반 or NULL 값이 들어갈 수 없는 컬럼에 NULL 삽입 or 외래 키 제약 조건 위반
      */
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<BaseResponse<?>> handleDataIntegrityViolationException(final DataIntegrityViolationException e) {
-        // 구체적인 예외 원인 확인
         if (e.getCause() instanceof ConstraintViolationException constraintViolationException) {
 
             // 제약 조건 이름 추출
             String constraintName = constraintViolationException.getConstraintViolations().toString();
             String errorMessage = String.format("제약 조건 '%s' 위반이 발생했습니다.", constraintName);
+            log.info(errorMessage);
             return ApiResponseUtil.failure(HttpStatus.CONFLICT, errorMessage);
         } else {
+            log.info(e.getMessage());
             return ApiResponseUtil.failure(FailMessage.INTEGRITY_CONFLICT);
         }
-    }
-
-    /**
-     * 404 - EntityNotFoundException
-     * 발생: 리소스를 찾을 수 없음
-     */
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<BaseResponse<?>> handleEntityNotFoundException(EntityNotFoundException e) {
-        return ApiResponseUtil.failure(FailMessage.ENTITY_NOT_FOUND);
     }
 
     /**
      * 500 - 모든 예외 처리
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<BaseResponse<?>> handleAllExceptions(Exception e) {
-        //todo: 여기 로그 찍어야됨
+    public ResponseEntity<BaseResponse<?>> handleAllExceptions(final Exception e) {
+        log.info(e.getMessage());
        return ApiResponseUtil.failure(FailMessage.INTERNAL_SERVER_ERROR);
     }
 }

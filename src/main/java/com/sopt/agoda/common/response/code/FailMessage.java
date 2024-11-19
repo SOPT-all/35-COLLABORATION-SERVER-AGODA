@@ -9,6 +9,7 @@ public enum FailMessage {
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
     INVALID_REQUEST_PARAMETER_VALUE(HttpStatus.BAD_REQUEST, "유효하지 않은 요청 파라미터 값입니다."),
     INVALID_REQUEST_JSON(HttpStatus.BAD_REQUEST, "잘못된 JSON 형식입니다."),
+    INVALID_REQUEST_HTTP_METHOD(HttpStatus.METHOD_NOT_ALLOWED, "잘못된 http method입니다."),
 
     /**
      * 401 Unauthorized
@@ -24,6 +25,7 @@ public enum FailMessage {
      * 404 Not Found
      */
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND, "대상을 찾을 수 없습니다."),
+    API_NOT_FOUND(HttpStatus.NOT_FOUND, "잘못된 API입니다.."),
 
     /**
      * 405 Method Not Allowed
