@@ -5,6 +5,8 @@ import com.sopt.agoda.common.response.code.SuccessMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface ApiResponseUtil {
     static ResponseEntity<BaseResponse<?>> success(final SuccessMessage successMessage) {
         return ResponseEntity.status(successMessage.getHttpStatus())

@@ -5,6 +5,8 @@ import com.sopt.agoda.common.response.code.FailMessage;
 import com.sopt.agoda.common.response.code.SuccessMessage;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+
 public class BaseResponse<T> {
     private final int status;
     private final String message;

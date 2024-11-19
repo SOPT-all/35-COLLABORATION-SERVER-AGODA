@@ -1,4 +1,139 @@
 package com.sopt.agoda.common.handler;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.sopt.agoda.common.exception.AgodaException;
+import com.sopt.agoda.common.response.ApiResponseUtil;
+import com.sopt.agoda.common.response.BaseResponse;
+import com.sopt.agoda.common.response.code.FailMessage;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import java.util.stream.Collectors;
+
+@RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    /**
+     * AgodaException
+     */
+    @ExceptionHandler(AgodaException.class)
+    protected ResponseEntity<BaseResponse<?>> handleAgodaException(final AgodaException e) {
+        return ApiResponseUtil.failure(e.getFailMessage());
+    }
+
+    /**
+     * 400 - MethodArgumentNotValidException
+     * 발생 이유 : @Valid 검증 실패 (@Request Body)
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<BaseResponse<?>> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+        // 모든 검증 실패 메시지를 추출하고 줄바꿈으로 연결
+        final String errorMessage = e.getBindingResult().getAllErrors().stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .collect(Collectors.joining("\n")); // 메시지를 줄바꿈으로 연결
+
+        return ApiResponseUtil.failure(HttpStatus.BAD_REQUEST, errorMessage);
+    }
+
+    /**
+     * 400 - HandlerMethodValidationException
+     * 발생 이유 : @Valid 검증 실패 (@Request Param, @ModelAttribute)
+     */
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ResponseEntity<BaseResponse<?>> handleMethodValidationException(final HandlerMethodValidationException e) {
+        // 모든 검증 실패 메시지를 추출하고 줄바꿈으로 연결
+        final String errorMessage = e.getAllValidationResults().stream()
+                .flatMap(violation -> violation.getResolvableErrors().stream())
+                .map(MessageSourceResolvable::getDefaultMessage)
+                .collect(Collectors.joining("\n"));
+
+        return ApiResponseUtil.failure(HttpStatus.BAD_REQUEST, errorMessage);
+    }
+
+    /**
+     * 400 - MissingServletRequestParameterException
+     * 발생 이유 : 필수 파라미터 없을 때 발생
+     */
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<BaseResponse<?>> handleMissingServletRequestParameterException(final MissingServletRequestParameterException e) {
+        final String errorMessage = "누락된 파라미터 : " + e.getParameterName();
+        return ApiResponseUtil.failure(HttpStatus.BAD_REQUEST, errorMessage);
+    }
+
+    /**
+     * 400 - MethodArgumentTypeMismatchException
+     * 발생 이유 : 메서드 인자의 타입이 잘못되었을 때 발생
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<BaseResponse<?>> handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException e) {
+        final String errorMessage = "잘못된 인자값 : " + e.getParameter().getParameterName();
+        return ApiResponseUtil.failure(HttpStatus.BAD_REQUEST, errorMessage);
+    }
+
+    /**
+     * 400 - HttpMessageNotReadableException
+     * 발생 이유 : json 바인딩 오류 or @requsetBody 필수값이 누락되거나 데이터 자료형이 잘못된 경우 or json 이외의 형식(데이터포맷)일 경우에 발생
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<BaseResponse<?>> handleHttpMessageNotReadableException(final HttpMessageNotReadableException e) {
+        if (e.getCause() instanceof JsonMappingException jsonMappingException) { //json 매핑이 잘못되었을 경우
+            // 모든 잘못된 필드 추출
+            String errorMessage = jsonMappingException.getPath().stream()
+                    .map(ref -> String.format("잘못된 필드 값 : '%s'", ref.getFieldName()))
+                    .collect(Collectors.joining("\n"));
+
+            return ApiResponseUtil.failure(HttpStatus.BAD_REQUEST, errorMessage);
+        } else { //그 외의 경우들
+            return ApiResponseUtil.failure(FailMessage.INVALID_REQUEST_JSON);
+        }
+    }
+
+    /**
+     * 409 - DataIntegrityViolationException
+     * 발생 이유 - Unique Key 제약 조건 위반 or NULL 값이 들어갈 수 없는 컬럼에 NULL 삽입 or 외래 키 제약 조건 위반
+     */
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<BaseResponse<?>> handleDataIntegrityViolationException(final DataIntegrityViolationException e) {
+        // 구체적인 예외 원인 확인
+        if (e.getCause() instanceof ConstraintViolationException constraintViolationException) {
+
+            // 제약 조건 이름 추출
+            String constraintName = constraintViolationException.getConstraintViolations().toString();
+            String errorMessage = String.format("제약 조건 '%s' 위반이 발생했습니다.", constraintName);
+            return ApiResponseUtil.failure(HttpStatus.CONFLICT, errorMessage);
+        } else {
+            return ApiResponseUtil.failure(FailMessage.INTEGRITY_CONFLICT);
+        }
+    }
+
+    /**
+     * 404 - EntityNotFoundException
+     * 발생: 리소스를 찾을 수 없음
+     */
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<BaseResponse<?>> handleEntityNotFoundException(EntityNotFoundException e) {
+        return ApiResponseUtil.failure(FailMessage.ENTITY_NOT_FOUND);
+    }
+
+    /**
+     * 500 - 모든 예외 처리
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<BaseResponse<?>> handleAllExceptions(Exception e) {
+        //todo: 여기 로그 찍어야됨
+       return ApiResponseUtil.failure(FailMessage.INTERNAL_SERVER_ERROR);
+    }
 }
+

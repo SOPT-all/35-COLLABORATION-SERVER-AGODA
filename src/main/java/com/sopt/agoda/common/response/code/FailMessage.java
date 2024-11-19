@@ -8,6 +8,7 @@ public enum FailMessage {
      */
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
     INVALID_REQUEST_PARAMETER_VALUE(HttpStatus.BAD_REQUEST, "유효하지 않은 요청 파라미터 값입니다."),
+    INVALID_REQUEST_JSON(HttpStatus.BAD_REQUEST, "잘못된 JSON 형식입니다."),
 
     /**
      * 401 Unauthorized
@@ -33,6 +34,7 @@ public enum FailMessage {
      * 409 Conflict
      */
     CONFLICT(HttpStatus.CONFLICT, "이미 존재하는 리소스입니다."),
+    INTEGRITY_CONFLICT(HttpStatus.CONFLICT, "데이터 무결성 위반입니다."),
 
     /**
      * 500 Internal Server Error
