@@ -6,20 +6,18 @@ public enum SuccessMessage {
     /**
      * 200 OK
      */
-    OK(HttpStatus.OK, "s2000", "요청이 성공했습니다."),
+    OK(HttpStatus.OK, "요청이 성공했습니다."),
 
     /**
      * 201 Created
      */
-    CREATED(HttpStatus.CREATED, "s2010", "요청이 성공했습니다.");
+    CREATED(HttpStatus.CREATED, "요청이 성공했습니다.");
 
     private final HttpStatus httpStatus;
-    private final String code;
     private final String message;
 
-    private SuccessMessage(HttpStatus httpStatus, String code, String message) {
+    private SuccessMessage(HttpStatus httpStatus, String message) {
         this.httpStatus = httpStatus;
-        this.code = code;
         this.message = message;
     }
 
