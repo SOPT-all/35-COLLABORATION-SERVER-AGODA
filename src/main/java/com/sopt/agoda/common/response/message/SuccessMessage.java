@@ -2,7 +2,7 @@ package com.sopt.agoda.common.response.message;
 
 import org.springframework.http.HttpStatus;
 
-public enum SuccessMessage {
+public enum SuccessMessage implements ApiMessage{
     /**
      * 200 OK
      */

@@ -2,7 +2,7 @@ package com.sopt.agoda.common.response.message;
 
 import org.springframework.http.HttpStatus;
 
-public enum FailMessage {
+public enum FailMessage implements ApiMessage{
     /**
      * 400 Bad Request
      */
