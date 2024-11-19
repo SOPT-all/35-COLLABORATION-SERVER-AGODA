@@ -1,7 +1,7 @@
 package com.sopt.agoda.common.response;
 
-import com.sopt.agoda.common.response.code.FailMessage;
-import com.sopt.agoda.common.response.code.SuccessMessage;
+import com.sopt.agoda.common.response.message.FailMessage;
+import com.sopt.agoda.common.response.message.SuccessMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

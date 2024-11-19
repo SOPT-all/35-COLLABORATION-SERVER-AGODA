@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.sopt.agoda.common.exception.AgodaException;
 import com.sopt.agoda.common.response.ApiResponseUtil;
 import com.sopt.agoda.common.response.BaseResponse;
-import com.sopt.agoda.common.response.code.FailMessage;
+import com.sopt.agoda.common.response.message.FailMessage;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
@@ -104,7 +104,7 @@ public class GlobalExceptionHandler {
 
             return ApiResponseUtil.failure(HttpStatus.BAD_REQUEST, errorMessage);
         } else { //그 외의 경우들
-            return ApiResponseUtil.failure(FailMessage.INVALID_REQUEST_JSON);
+            return ApiResponseUtil.failure(FailMessage.BAD_REQUEST_JSON);
         }
     }
 
@@ -114,7 +114,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<BaseResponse<?>> handleEntityNotFoundException(final EntityNotFoundException e) {
-        return ApiResponseUtil.failure(FailMessage.ENTITY_NOT_FOUND);
+        return ApiResponseUtil.failure(FailMessage.NOT_FOUND_ENTITY);
     }
 
     /**
@@ -123,7 +123,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<BaseResponse<?>> handleNoResourceFoundException(final NoResourceFoundException e) {
-        return ApiResponseUtil.failure(FailMessage.API_NOT_FOUND);
+        return ApiResponseUtil.failure(FailMessage.NOT_FOUND_API);
     }
 
     /**
@@ -132,7 +132,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<BaseResponse<?>> handleNoHandlerFoundException(final NoHandlerFoundException e) {
-        return ApiResponseUtil.failure(FailMessage.API_NOT_FOUND);
+        return ApiResponseUtil.failure(FailMessage.NOT_FOUND_API);
     }
 
     /**
@@ -141,7 +141,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<BaseResponse<?>> handleHttpRequestMethodNotSupportedException(final HttpRequestMethodNotSupportedException e) {
-        return ApiResponseUtil.failure(FailMessage.INVALID_REQUEST_HTTP_METHOD);
+        return ApiResponseUtil.failure(FailMessage.BAD_REQUEST_HTTP_METHOD);
     }
 
     /**

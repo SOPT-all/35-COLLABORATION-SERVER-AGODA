@@ -1,4 +1,4 @@
-package com.sopt.agoda.common.response.code;
+package com.sopt.agoda.common.response.message;
 
 import org.springframework.http.HttpStatus;
 
