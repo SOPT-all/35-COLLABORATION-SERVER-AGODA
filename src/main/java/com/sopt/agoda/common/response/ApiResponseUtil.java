@@ -2,6 +2,7 @@ package com.sopt.agoda.common.response;
 
 import com.sopt.agoda.common.response.code.FailMessage;
 import com.sopt.agoda.common.response.code.SuccessMessage;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public interface ApiResponseUtil {
@@ -18,5 +19,11 @@ public interface ApiResponseUtil {
     static ResponseEntity<BaseResponse<?>> failure(final FailMessage failMessage) {
         return ResponseEntity.status(failMessage.getHttpStatus())
                 .body(BaseResponse.of(failMessage));
+    }
+
+    static ResponseEntity<BaseResponse<?>> failure(final HttpStatus httpStatus, final String message) {
+        return ResponseEntity
+                .status(httpStatus)
+                .body(BaseResponse.of(httpStatus, message));
     }
 }

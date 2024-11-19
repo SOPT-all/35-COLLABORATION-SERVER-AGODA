@@ -3,6 +3,7 @@ package com.sopt.agoda.common.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.sopt.agoda.common.response.code.FailMessage;
 import com.sopt.agoda.common.response.code.SuccessMessage;
+import org.springframework.http.HttpStatus;
 
 public class BaseResponse<T> {
     private final int status;
@@ -35,6 +36,13 @@ public class BaseResponse<T> {
         return builder()
                 .status(failMessage.getHttpStatus().value())
                 .message(failMessage.getMessage())
+                .build();
+    }
+
+    public static BaseResponse<?> of(HttpStatus httpStatus, String message) {
+        return builder()
+                .status(httpStatus.value())
+                .message(message)
                 .build();
     }
 
