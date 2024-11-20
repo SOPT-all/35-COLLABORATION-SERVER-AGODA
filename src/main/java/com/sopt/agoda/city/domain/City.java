@@ -2,6 +2,7 @@ package com.sopt.agoda.city.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "cities")
@@ -14,6 +15,11 @@ public class City {
     @Column(name = "city_name")
     @NotNull(message = "도시 이름이 null이 될 수 없습니다.")
     private String name;
+
+    @Column(name = "hotel_count")
+    @NotNull(message = "호텔 개수가 null이 될 수 없습니다.")
+    @Size(min = 0, message = "호텔 최소 개수는 0개입니다.")
+    private int hotelCount;
 
     @Column(name = "city_image_url")
     @NotNull(message = "도시 이미지가 null이 될 수 없습니다.")
