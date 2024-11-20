@@ -1,5 +1,7 @@
 package com.sopt.agoda.city.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,6 +12,7 @@ public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "city_id")
+    @JsonProperty("cityId")
     private Long id;
 
     @Column(name = "city_name")
@@ -69,5 +72,23 @@ public class City {
         public City build() {
             return new City(name, imageUrl, countryId);
         }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public @NotNull(message = "도시 이름이 null이 될 수 없습니다.") String getName() {
+        return name;
+    }
+
+    @NotNull(message = "호텔 개수가 null이 될 수 없습니다.")
+    @Size(min = 0, message = "호텔 최소 개수는 0개입니다.")
+    public int getHotelCount() {
+        return hotelCount;
+    }
+
+    public @NotNull(message = "도시 이미지가 null이 될 수 없습니다.") String getImageUrl() {
+        return imageUrl;
     }
 }
