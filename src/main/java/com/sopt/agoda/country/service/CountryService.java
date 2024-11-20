@@ -15,10 +15,8 @@ public class CountryService {
         this.countryRepository = countryRepository;
     }
 
-    public BestCountryRes getBestLocations() {
+    public BestCountryRes getBestCountries() {
         List<Country> foundCountries = countryRepository.findAll();
-        foundCountries.stream()
-                .map(country -> )
+        return BestCountryRes.of(foundCountries);
     }
-
 }
