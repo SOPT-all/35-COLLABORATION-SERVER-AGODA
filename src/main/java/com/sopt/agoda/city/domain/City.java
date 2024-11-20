@@ -95,4 +95,8 @@ public class City {
     public String getImageUrl() {
         return imageUrl;
     }
+
+    public Long getCountryId() {
+        return countryId;
+    }
 }

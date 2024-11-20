@@ -1,5 +1,6 @@
 package com.sopt.agoda.city.controller;
 
+import com.sopt.agoda.city.controller.dto.res.CitiesRes;
 import com.sopt.agoda.city.controller.dto.res.PopularCitiesRes;
 import com.sopt.agoda.city.service.CityService;
 import com.sopt.agoda.common.response.ApiResponseUtil;
@@ -20,6 +21,12 @@ public class CityController {
     @GetMapping("/popular-cities")
     public ResponseEntity<BaseResponse<?>> getPopularCities() {
         final PopularCitiesRes response = cityService.getPopularCities();
+        return ApiResponseUtil.success(SuccessMessage.OK, response);
+    }
+
+    @GetMapping("/cities")
+    public ResponseEntity<BaseResponse<?>> getCities() {
+        final CitiesRes response = cityService.getCities();
         return ApiResponseUtil.success(SuccessMessage.OK, response);
     }
 }
