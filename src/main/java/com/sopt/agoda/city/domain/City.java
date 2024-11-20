@@ -1,7 +1,6 @@
 package com.sopt.agoda.city.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -34,13 +33,14 @@ public class City {
 
     protected City() {}
 
-    private City(String name, String imageUrl, Long countryId) {
+    private City(final String name, final int hotelCount, final String imageUrl, final Long countryId) {
         this.name = name;
+        this.hotelCount = hotelCount;
         this.imageUrl = imageUrl;
         this.countryId = countryId;
     }
 
-    public static City create(final String name, final String imageUrl, final Long countryId) {
+    public static City create(final String name, final String imageUrl, final int hotelCount, final Long countryId) {
         return new City.Builder()
                 .name(name)
                 .imageUrl(imageUrl)
@@ -51,6 +51,7 @@ public class City {
     //빌더 클래스
     public static class Builder {
         private String name;
+        private int hotelCount;
         private String imageUrl;
         private Long countryId;
 
@@ -64,13 +65,18 @@ public class City {
             return this;
         }
 
+        public Builder hotelCount(int hotelCount) {
+            this.hotelCount = hotelCount;
+            return this;
+        }
+
         public Builder countryId(Long countryId) {
             this.countryId = countryId;
             return this;
         }
 
         public City build() {
-            return new City(name, imageUrl, countryId);
+            return new City(name, hotelCount, imageUrl, countryId);
         }
     }
 
@@ -78,17 +84,15 @@ public class City {
         return id;
     }
 
-    public @NotNull(message = "도시 이름이 null이 될 수 없습니다.") String getName() {
+    public String getName() {
         return name;
     }
 
-    @NotNull(message = "호텔 개수가 null이 될 수 없습니다.")
-    @Size(min = 0, message = "호텔 최소 개수는 0개입니다.")
     public int getHotelCount() {
         return hotelCount;
     }
 
-    public @NotNull(message = "도시 이미지가 null이 될 수 없습니다.") String getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 }

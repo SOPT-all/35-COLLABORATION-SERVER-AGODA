@@ -33,14 +33,16 @@ public class Country {
 
     protected Country() {}
 
-    private Country(String name, String imageUrl) {
+    private Country(final String name, final int hotelCount, final String imageUrl) {
         this.name = name;
+        this.hotelCount = hotelCount;
         this.imageUrl = imageUrl;
     }
 
-    public static Country create(final String name, final String imageUrl) {
-        return new Country.Builder()
+    public static Country create(final String name, final int hotelCount, final String imageUrl) {
+        return new Builder()
                 .name(name)
+                .hotelCount(hotelCount)
                 .imageUrl(imageUrl)
                 .build();
     }
@@ -48,20 +50,26 @@ public class Country {
     //빌더 클래스
     public static class Builder {
         private String name;
+        private int hotelCount;
         private String imageUrl;
 
-        public Builder name(String name) {
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder imageUrl(String imageUrl) {
+        public Builder hotelCount(final int hotelCount) {
+            this.hotelCount = hotelCount;
+            return this;
+        }
+
+        public Builder imageUrl(final String imageUrl) {
             this.imageUrl = imageUrl;
             return this;
         }
 
         public Country build() {
-            return new Country(name, imageUrl);
+            return new Country(name, hotelCount, imageUrl);
         }
     }
 
@@ -69,17 +77,15 @@ public class Country {
         return id;
     }
 
-    public @NotNull(message = "나라 이름이 null이 될 수 없습니다.") String getName() {
+    public String getName() {
         return name;
     }
 
-    @NotNull(message = "호텔 개수가 null이 될 수 없습니다.")
-    @Size(min = 0, message = "호텔 최소 개수는 0개입니다.")
     public int getHotelCount() {
         return hotelCount;
     }
 
-    public @NotNull(message = "나라 사진이 null이 될 수 없습니다.") String getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 }

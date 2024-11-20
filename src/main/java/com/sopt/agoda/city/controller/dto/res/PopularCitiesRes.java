@@ -1,7 +1,5 @@
 package com.sopt.agoda.city.controller.dto.res;
 
-import com.sopt.agoda.city.domain.City;
-
 import java.util.List;
 
 public record PopularCitiesRes(
@@ -19,8 +17,9 @@ public record PopularCitiesRes(
     ) {
 
         public static CitiesInfo of(final Long cityId, final String cityName, final int hotelCount, final String cityImage) {
-            return new CitiesInfo.Builder()
+            return new Builder()
                     .cityId(cityId)
+                    .hotelCount(hotelCount)
                     .cityName(cityName)
                     .cityImage(cityImage)
                     .build();
