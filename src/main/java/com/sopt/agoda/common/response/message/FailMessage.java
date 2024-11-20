@@ -26,6 +26,10 @@ public enum FailMessage implements ApiMessage{
      */
     NOT_FOUND_ENTITY(HttpStatus.NOT_FOUND, "대상을 찾을 수 없습니다."),
     NOT_FOUND_API(HttpStatus.NOT_FOUND, "잘못된 API입니다.."),
+    NOT_FOUND_POPULAR_CITIES(HttpStatus.NOT_FOUND, "인기 도시를 찾을 수 없습니다."),
+    NOT_FOUND_BEST_COUNTRY(HttpStatus.NOT_FOUND, "베스트 여행지를 찾을 수 없습니다."),
+    NOT_FOUND_SEARCH_CITIES(HttpStatus.NOT_FOUND, "검색 도시 리스트를 찾을 수 없습니다."),
+
 
     /**
      * 405 Method Not Allowed

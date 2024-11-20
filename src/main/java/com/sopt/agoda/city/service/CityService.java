@@ -6,6 +6,7 @@ import com.sopt.agoda.city.domain.City;
 import com.sopt.agoda.city.repository.CityRepository;
 import com.sopt.agoda.common.exception.AgodaException;
 import com.sopt.agoda.common.response.message.FailMessage;
+import com.sopt.agoda.common.util.Validator;
 import com.sopt.agoda.country.domain.Country;
 import com.sopt.agoda.country.repository.CountryRepository;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,11 @@ public class CityService {
 
     public PopularCitiesRes getPopularCities() {
         final List<City> foundCities = cityRepository.findAll();
+        //빈 값인지 검증
+        if (Validator.isEmptyList(foundCities)) {
+            throw new AgodaException(FailMessage.NOT_FOUND_POPULAR_CITIES);
+        }
+
         final List<PopularCitiesRes.CitiesInfo> citiesInfo = foundCities.stream().map(
                 city -> PopularCitiesRes.CitiesInfo.of(city.getId(), city.getName(), city.getHotelCount(), city.getImageUrl())
         ).toList();
@@ -32,6 +38,11 @@ public class CityService {
 
     public CitiesRes getCities() {
         final List<City> foundCities = cityRepository.findAll();
+        //빈 값인지 검증
+        if (Validator.isEmptyList(foundCities)) {
+            throw new AgodaException(FailMessage.NOT_FOUND_SEARCH_CITIES);
+        }
+
         final List<CitiesRes.SearchCityInfo> searchCityInfos = foundCities.stream().map(
                 city -> {
                     final Country foundCountry = countryRepository.findById(city.getCountryId()).orElseThrow(
