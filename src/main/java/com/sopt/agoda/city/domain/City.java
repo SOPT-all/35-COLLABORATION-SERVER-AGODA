@@ -1,4 +1,4 @@
-package com.sopt.agoda.location.domain;
+package com.sopt.agoda.city.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
