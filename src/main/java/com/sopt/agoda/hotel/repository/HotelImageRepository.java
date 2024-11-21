@@ -10,15 +10,10 @@ import java.util.List;
 @Repository
 public interface HotelImageRepository extends JpaRepository<HotelImage, Long> {
     @Query(value = """
-        SELECT hi.hotel_id, hi.hotel_image_url
-        FROM hotel_images hi
-        WHERE hi.hotel_id IN :hotelIds
-        AND hi.hotel_image_id IN (
-            SELECT MIN(hi2.hotel_image_id)
-            FROM hotel_images hi2
-            WHERE hi2.hotel_id IN :hotelIds
-            GROUP BY hi2.hotel_id
-        )
-        """, nativeQuery = true)
+        SELECT hi.hotelId, hi.imageUrl
+        FROM HotelImage hi
+        WHERE hi.hotelId IN :hotelIds
+        AND hi.isThumbnail = TRUE
+        """)
     List<Object[]> findFirstImagesForHotels(List<Long> hotelIds);
 }

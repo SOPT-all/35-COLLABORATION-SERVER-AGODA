@@ -29,10 +29,10 @@ public class HotelService {
     public HotelListRes getHotelList(final SaleType saleType, final Long cityId) {
         List<Hotel> allHotels;
 
-        if (saleType == SaleType.TIME_LIMIT) {
-            allHotels = hotelRepository.findByCityId(cityId);
-        } else {
+        if (saleType == SaleType.DEFAULT) {
             allHotels = hotelRepository.findByCityIdAndIsTimeSaleFalse(cityId);
+        } else {
+            allHotels = hotelRepository.findByCityId(cityId);
         }
 
         if (ValidatorUtils.isEmptyList(allHotels)) {
