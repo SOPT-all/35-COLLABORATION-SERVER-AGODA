@@ -2,6 +2,7 @@ package com.sopt.agoda.city.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -20,7 +21,7 @@ public class City {
 
     @Column(name = "hotel_count")
     @NotNull(message = "호텔 개수가 null이 될 수 없습니다.")
-    @Size(min = 0, message = "호텔 최소 개수는 0개입니다.")
+    @Min(value = 0, message = "최소 호텔 개수는 0개입니다")
     private int hotelCount;
 
     @Column(name = "city_image_url")

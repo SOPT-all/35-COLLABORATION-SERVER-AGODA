@@ -169,6 +169,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<BaseResponse<?>> handleAllExceptions(final Exception e) {
         log.info(e.getMessage());
+        System.out.println(e);
        return ApiResponseUtil.failure(FailMessage.INTERNAL_SERVER_ERROR);
     }
 }
