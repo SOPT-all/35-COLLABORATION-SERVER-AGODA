@@ -10,6 +10,7 @@ public enum FailMessage implements ApiMessage{
     BAD_REQUEST_PARAMETER_VALUE(HttpStatus.BAD_REQUEST, "유효하지 않은 요청 파라미터 값입니다."),
     BAD_REQUEST_JSON(HttpStatus.BAD_REQUEST, "잘못된 JSON 형식입니다."),
     BAD_REQUEST_HTTP_METHOD(HttpStatus.METHOD_NOT_ALLOWED, "잘못된 http method입니다."),
+    BAD_REQUEST_SALETYPE_PARAMETER_VALUE(HttpStatus.BAD_REQUEST, "잘못된 인자값 : SaleType"),
 
     /**
      * 401 Unauthorized
@@ -29,7 +30,7 @@ public enum FailMessage implements ApiMessage{
     NOT_FOUND_POPULAR_CITIES(HttpStatus.NOT_FOUND, "인기 도시를 찾을 수 없습니다."),
     NOT_FOUND_BEST_COUNTRY(HttpStatus.NOT_FOUND, "베스트 여행지를 찾을 수 없습니다."),
     NOT_FOUND_SEARCH_CITIES(HttpStatus.NOT_FOUND, "검색 도시 리스트를 찾을 수 없습니다."),
-
+    NOT_FOUND_HOTELS(HttpStatus.NOT_FOUND, "호텔 리스트를 찾을 수 없습니다. "),
 
     /**
      * 405 Method Not Allowed

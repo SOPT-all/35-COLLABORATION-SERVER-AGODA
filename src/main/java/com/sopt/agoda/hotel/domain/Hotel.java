@@ -196,4 +196,52 @@ public class Hotel {
             return new Hotel(this);
         }
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public int getStar() {
+        return star;
+    }
+
+    public String getHotelDistrict() {
+        return hotelDistrict;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public int getReviewCount() {
+        return reviewCount;
+    }
+
+    public int getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public int getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public boolean isQuarterDiscount() {
+        return isQuarterDiscount;
+    }
+
+    public int getTaxPrice() {
+        return taxPrice;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public boolean isTimeSale() {
+        return isTimeSale;
+    }
 }
