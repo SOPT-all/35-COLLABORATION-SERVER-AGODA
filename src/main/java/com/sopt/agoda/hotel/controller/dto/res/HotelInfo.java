@@ -54,7 +54,7 @@ public record HotelInfo(
     }
 
 
-    public static class Builder {
+    private static class Builder {
         private Long hotelId;
         private String hotelName;
         private Number star;
@@ -69,73 +69,73 @@ public record HotelInfo(
         private String hotelImage;
         private Boolean isTimeSale;
 
-        public Builder hotelId(final Long hotelId) {
+        private Builder hotelId(final Long hotelId) {
             this.hotelId = hotelId;
             return this;
         }
 
 
-        public Builder hotelName(final String hotelName) {
+        private Builder hotelName(final String hotelName) {
             this.hotelName = hotelName;
             return this;
         }
 
-        public Builder star(final Number star) {
+        private Builder star(final Number star) {
             this.star = star;
             return this;
         }
 
-        public Builder hotelDistrict(final String hotelDistrict) {
+        private Builder hotelDistrict(final String hotelDistrict) {
             this.hotelDistrict = hotelDistrict;
             return this;
         }
 
-        public Builder rating(final Double rating) {
+        private Builder rating(final Double rating) {
             this.rating = rating;
             return this;
         }
 
-        public Builder reviewCount(final Number reviewCount) {
+        private Builder reviewCount(final Number reviewCount) {
             this.reviewCount = reviewCount;
             return this;
         }
 
-        public Builder originalPrice(final Number originalPrice) {
+        private Builder originalPrice(final Number originalPrice) {
             this.originalPrice = originalPrice;
             return this;
         }
 
-        public Builder discountPrice(final Number discountPrice) {
+        private Builder discountPrice(final Number discountPrice) {
             this.discountPrice = discountPrice;
             return this;
         }
 
-        public Builder isQuarterDiscount(final Boolean isQuarterDiscount) {
+        private Builder isQuarterDiscount(final Boolean isQuarterDiscount) {
             this.isQuarterDiscount = isQuarterDiscount;
             return this;
         }
 
-        public Builder taxPrice(final Number taxPrice) {
+        private Builder taxPrice(final Number taxPrice) {
             this.taxPrice = taxPrice;
             return this;
         }
 
-        public Builder isLiked(final Boolean isLiked) {
+        private Builder isLiked(final Boolean isLiked) {
             this.isLiked = isLiked;
             return this;
         }
 
-        public Builder hotelImage(final String hotelImage) {
+        private Builder hotelImage(final String hotelImage) {
             this.hotelImage = hotelImage;
             return this;
         }
 
-        public Builder isTimeSale(final Boolean isTimeSale) {
+        private Builder isTimeSale(final Boolean isTimeSale) {
             this.isTimeSale = isTimeSale;
             return this;
         }
 
-        public HotelInfo build() {
+        private HotelInfo build() {
             return new HotelInfo(hotelId, hotelName, star, hotelDistrict, rating, reviewCount, originalPrice, discountPrice, isQuarterDiscount, taxPrice, isLiked, hotelImage, isTimeSale);
         }
     }

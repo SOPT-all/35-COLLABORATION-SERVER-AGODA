@@ -16,4 +16,7 @@ public interface HotelImageRepository extends JpaRepository<HotelImage, Long> {
         AND hi.isThumbnail = TRUE
         """)
     List<Object[]> findFirstImagesForHotels(List<Long> hotelIds);
+
+    @Query("SELECT hi FROM HotelImage hi WHERE hi.hotelId = :hotelId ORDER BY hi.id ASC")
+    List<HotelImage> findByHotelIdOrderByHotelImageId(Long hotelId);
 }
