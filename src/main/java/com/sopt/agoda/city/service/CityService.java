@@ -46,7 +46,7 @@ public class CityService {
         final List<CitiesRes.SearchCityInfo> searchCityInfos = foundCities.stream().map(
                 city -> {
                     final Country foundCountry = countryRepository.findById(city.getCountryId()).orElseThrow(
-                            () -> new AgodaException(FailMessage.NOT_FOUND_ENTITY));
+                            () -> new AgodaException(FailMessage.NOT_FOUND_SEARCH_CITIES));
                     return CitiesRes.SearchCityInfo.of(city.getId(), city.getName(), foundCountry.getName());
                 }
         ).toList();
