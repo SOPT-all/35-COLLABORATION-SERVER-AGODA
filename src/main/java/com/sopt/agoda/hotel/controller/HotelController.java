@@ -5,6 +5,7 @@ import com.sopt.agoda.common.response.BaseResponse;
 import com.sopt.agoda.common.response.message.SuccessMessage;
 import com.sopt.agoda.hotel.controller.dto.res.HotelDetailRes;
 import com.sopt.agoda.hotel.controller.dto.res.HotelListRes;
+import com.sopt.agoda.room.controller.dto.res.HotelRoomsRes;
 import com.sopt.agoda.hotel.enums.SaleType;
 import com.sopt.agoda.hotel.service.HotelService;
 import jakarta.validation.constraints.Min;
@@ -31,5 +32,11 @@ public class HotelController {
     public ResponseEntity<BaseResponse<?>> getHotelDetail(@PathVariable @Min(1) final Long hotelId) {
         final HotelDetailRes hotelDetail = hotelService.getHotelDetail(hotelId);
         return ApiResponseUtil.success(SuccessMessage.OK, hotelDetail);
+    }
+
+    @GetMapping("/{hotelId}/rooms")
+    public ResponseEntity<BaseResponse<?>> getHotelRoomList(@PathVariable @Min(1) final Long hotelId) {
+        final HotelRoomsRes hotelRoomList = hotelService.getHotelRoomList(hotelId);
+        return ApiResponseUtil.success(SuccessMessage.OK, hotelRoomList);
     }
 }

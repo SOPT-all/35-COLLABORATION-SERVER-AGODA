@@ -1,6 +1,7 @@
 package com.sopt.agoda.room.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,8 +20,8 @@ public class Room {
 
     @Column(name = "space_size", nullable = false)
     @NotNull(message = "방 크기가 null이면 안됩니다.")
-    @Size(min = 1, message = "방 크기가 최소 1은 되어야 합니다.")
-    private String spaceSize;
+    @Min(value=0, message = "방 크기는 최소 0입니다. ")
+    private int spaceSize;
 
     @Column(name = "bed_type", nullable = false)
     @NotNull(message = "침대 타입이 null이면 안됩니다.")
@@ -28,7 +29,7 @@ public class Room {
 
     @Column(name = "bed_count", nullable = false)
     @NotNull(message = "침대 개수가 null이면 안됩니다.")
-    @Size(min = 0, message = "최소 침대 개수는 0개입니다.")
+    @Min(value = 0, message = "최소 침대 개수는 0개입니다.")
     private int bedCount;
 
     @Column(name = "bath_info", nullable = false)
@@ -37,7 +38,7 @@ public class Room {
 
     @Column(name = "max_capacity", nullable = false)
     @NotNull(message = "최대 수용인원이 null이면 안됩니다.")
-    @Size(min = 1, message = "수용인원이 최소 1명은 되어야 합니다.")
+    @Min(value = 1, message = "수용인원이 최소 1명은 되어야 합니다.")
     private int maxCapacity;
 
     @Column(name = "hotel_id", nullable = false)
@@ -56,7 +57,7 @@ public class Room {
         this.hotelId = builder.hotelId;
     }
 
-    public static Room create(final String name, final String spaceSize, final String bedType, final int bedCount,
+    public static Room create(final String name, final int spaceSize, final String bedType, final int bedCount,
                               final String bathInfo, final int maxCapacity, final Long hotelId) {
         return new Builder()
                 .name(name)
@@ -72,7 +73,7 @@ public class Room {
     //빌더 클래스
     public static class Builder {
         private String name;
-        private String spaceSize;
+        private int spaceSize;
         private String bedType;
         private int bedCount;
         private String bathInfo;
@@ -84,7 +85,7 @@ public class Room {
             return this;
         }
 
-        public Builder spaceSize(final String spaceSize) {
+        public Builder spaceSize(final int spaceSize) {
             this.spaceSize = spaceSize;
             return this;
         }
@@ -117,5 +118,33 @@ public class Room {
         public Room build() {
             return new Room(this);
         }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getSpaceSize() {
+        return spaceSize;
+    }
+
+    public String getBedType() {
+        return bedType;
+    }
+
+    public int getBedCount() {
+        return bedCount;
+    }
+
+    public String getBathInfo() {
+        return bathInfo;
+    }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
     }
 }

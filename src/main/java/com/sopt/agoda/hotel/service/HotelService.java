@@ -12,9 +12,17 @@ import com.sopt.agoda.hotel.domain.HotelImage;
 import com.sopt.agoda.hotel.enums.SaleType;
 import com.sopt.agoda.hotel.repository.HotelImageRepository;
 import com.sopt.agoda.hotel.repository.HotelRepository;
+import com.sopt.agoda.room.controller.dto.res.HotelRoomImage;
+import com.sopt.agoda.room.controller.dto.res.HotelRoomInfo;
+import com.sopt.agoda.room.controller.dto.res.HotelRoomsRes;
+import com.sopt.agoda.room.domain.Room;
+import com.sopt.agoda.room.domain.RoomImage;
+import com.sopt.agoda.room.repository.RoomImageRepository;
+import com.sopt.agoda.room.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,10 +31,14 @@ import java.util.stream.Collectors;
 public class HotelService {
     private final HotelRepository hotelRepository;
     private final HotelImageRepository hotelImageRepository;
+    private final RoomRepository roomRepository;
+    private final RoomImageRepository roomImageRepository;
 
-    public HotelService(HotelRepository hotelRepository, HotelImageRepository hotelImageRepository) {
+    public HotelService(HotelRepository hotelRepository, HotelImageRepository hotelImageRepository, RoomRepository roomRepository, RoomImageRepository roomImageRepository) {
         this.hotelRepository = hotelRepository;
         this.hotelImageRepository = hotelImageRepository;
+        this.roomRepository = roomRepository;
+        this.roomImageRepository = roomImageRepository;
     }
 
     public HotelListRes getHotelList(final SaleType saleType, final Long cityId) {
@@ -67,19 +79,59 @@ public class HotelService {
         final Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new AgodaException(FailMessage.NOT_FOUND_HOTEL));
 
-        List<HotelImage> hotelImages = hotelImageRepository.findByHotelIdOrderByHotelImageId(hotelId);
+        final List<HotelImage> hotelImages = hotelImageRepository.findByHotelIdOrderByHotelImageId(hotelId);
 
-        List<HotelDetailImage> hotelDetailImages = hotelImages.stream()
-                .map(image -> new HotelDetailImage(image.getId(), image.getImageUrl()))
-                .toList();
-
-        if (ValidatorUtils.isEmptyList(hotelDetailImages)) {
+        if (ValidatorUtils.isEmptyList(hotelImages)) {
             throw new AgodaException(FailMessage.NOT_FOUND_HOTEL_IMAGES);
         }
+
+        final List<HotelDetailImage> hotelDetailImages = hotelImages.stream()
+                .map(image -> new HotelDetailImage(image.getId(), image.getImageUrl()))
+                .toList();
 
         return HotelDetailRes.of(
                 hotel.getId(), hotel.isLiked(), hotel.getHotelName(), hotel.getStar(),
                 hotel.getReviewCount(), hotelDetailImages
                 );
+    }
+
+    public HotelRoomsRes getHotelRoomList(final Long hotelId) {
+        final List<Room> rooms = roomRepository.findByHotelId(hotelId);
+
+        if (ValidatorUtils.isEmptyList(rooms)) {
+            throw new AgodaException(FailMessage.NOT_FOUND_ROOM);
+        }
+
+        final List<Long> roomIds = rooms.stream()
+                .map(Room::getId)
+                .toList();
+
+        final List<RoomImage> roomImageList = roomImageRepository.findByRoomIdInOrderById(roomIds);
+
+        if (ValidatorUtils.isEmptyList(roomImageList)) {
+            throw new AgodaException(FailMessage.NOT_FOUND_ROOM_IMAGES);
+        }
+
+        List<HotelRoomInfo> hotelRoomInfoList = rooms.stream().map(room -> {
+            List<HotelRoomImage> imagesForRoom = roomImageList.stream()
+                    .filter(roomImage -> roomImage.getRoomId().equals(room.getId()))
+                    .map(roomImage -> new HotelRoomImage(
+                            roomImage.getId(),
+                            roomImage.getImageUrl()
+                    )).toList();
+
+            return new HotelRoomInfo(
+                    room.getId(),
+                    room.getName(),
+                    room.getSpaceSize(),
+                    room.getBedType(),
+                    room.getBedCount(),
+                    room.getBathInfo(),
+                    room.getMaxCapacity(),
+                    imagesForRoom
+            );
+        }).toList();
+
+        return HotelRoomsRes.of(hotelRoomInfoList);
     }
 }

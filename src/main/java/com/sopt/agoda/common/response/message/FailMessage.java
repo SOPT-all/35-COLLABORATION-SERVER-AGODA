@@ -34,7 +34,8 @@ public enum FailMessage implements ApiMessage{
     NOT_FOUND_HOTELS(HttpStatus.NOT_FOUND, "호텔 리스트를 찾을 수 없습니다. "),
     NOT_FOUND_HOTEL(HttpStatus.NOT_FOUND, "호텔 정보를 찾을 수 없습니다. "),
     NOT_FOUND_HOTEL_IMAGES(HttpStatus.NOT_FOUND, "호텔 이미지를 찾을 수 없습니다. "),
-
+    NOT_FOUND_ROOM(HttpStatus.NOT_FOUND, "방 정보를 찾을 수 없습니다. "),
+    NOT_FOUND_ROOM_IMAGES(HttpStatus.NOT_FOUND, "방 이미지를 찾을 수 없습니다. "),
     /**
      * 405 Method Not Allowed
      */

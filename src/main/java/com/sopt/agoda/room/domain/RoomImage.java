@@ -54,4 +54,16 @@ public class RoomImage {
             return new RoomImage(this);
         }
     }
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
 }
