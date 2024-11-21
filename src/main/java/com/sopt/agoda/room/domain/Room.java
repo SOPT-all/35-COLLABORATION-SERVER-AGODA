@@ -1,6 +1,7 @@
 package com.sopt.agoda.room.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -28,7 +29,7 @@ public class Room {
 
     @Column(name = "bed_count", nullable = false)
     @NotNull(message = "침대 개수가 null이면 안됩니다.")
-    @Size(min = 0, message = "최소 침대 개수는 0개입니다.")
+    @Min(value = 0, message = "최소 침대 개수는 0개입니다")
     private int bedCount;
 
     @Column(name = "bath_info", nullable = false)
@@ -37,7 +38,7 @@ public class Room {
 
     @Column(name = "max_capacity", nullable = false)
     @NotNull(message = "최대 수용인원이 null이면 안됩니다.")
-    @Size(min = 1, message = "수용인원이 최소 1명은 되어야 합니다.")
+    @Min(value = 0, message = "최소 수용 인원은 0개입니다")
     private int maxCapacity;
 
     @Column(name = "hotel_id", nullable = false)

@@ -13,6 +13,7 @@ import com.sopt.agoda.hotel.enums.SaleType;
 import com.sopt.agoda.hotel.repository.HotelImageRepository;
 import com.sopt.agoda.hotel.repository.HotelRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -81,5 +82,13 @@ public class HotelService {
                 hotel.getId(), hotel.isLiked(), hotel.getHotelName(), hotel.getStar(),
                 hotel.getReviewCount(), hotelDetailImages
                 );
+    }
+
+    @Transactional
+    public void patchHotelLike(final Long hotelId, final boolean isLiked) {
+        Hotel foundHotel = hotelRepository.findById(hotelId).orElseThrow(
+                () -> new AgodaException(FailMessage.NOT_FOUND_HOTEL)
+        );
+        foundHotel.setLiked(isLiked);
     }
 }
