@@ -28,7 +28,7 @@ public class HotelController {
     }
 
     @GetMapping("/{hotelId}/details")
-    public ResponseEntity<BaseResponse<?>> getHotelDetail(@PathVariable @Min(1) Long hotelId) {
+    public ResponseEntity<BaseResponse<?>> getHotelDetail(@PathVariable @Min(1) final Long hotelId) {
         final HotelDetailRes hotelDetail = hotelService.getHotelDetail(hotelId);
         return ApiResponseUtil.success(SuccessMessage.OK, hotelDetail);
     }

@@ -11,21 +11,21 @@ public record HotelDetailImage(
                 .build();
     }
 
-    public static class Builder {
+    private static class Builder {
         private Long hotelImageId;
         private String hotelImageUrl;
 
-        public Builder hotelImageId(final Long hotelImageId) {
+        private Builder hotelImageId(final Long hotelImageId) {
             this.hotelImageId = hotelImageId;
             return this;
         }
 
-        public Builder hotelImageUrl(final String hotelImageUrl) {
+        private Builder hotelImageUrl(final String hotelImageUrl) {
             this.hotelImageUrl = hotelImageUrl;
             return this;
         }
 
-        public HotelDetailImage build() {
+        private HotelDetailImage build() {
             return new HotelDetailImage(hotelImageId, hotelImageUrl);
         }
     }

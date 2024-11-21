@@ -64,7 +64,7 @@ public class HotelService {
     }
 
     public HotelDetailRes getHotelDetail(final Long hotelId) {
-        Hotel hotel = hotelRepository.findById(hotelId)
+        final Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new AgodaException(FailMessage.NOT_FOUND_HOTEL));
 
         List<HotelImage> hotelImages = hotelImageRepository.findByHotelIdOrderByHotelImageId(hotelId);
