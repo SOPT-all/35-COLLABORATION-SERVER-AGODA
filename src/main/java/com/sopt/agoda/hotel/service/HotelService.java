@@ -134,6 +134,7 @@ public class HotelService {
         }).toList();
 
         return HotelRoomsRes.of(hotelRoomInfoList);
+    }
       
     @Transactional
     public void patchHotelLike(final Long hotelId, final boolean isLiked) {
