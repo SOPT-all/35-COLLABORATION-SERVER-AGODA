@@ -1,5 +1,8 @@
 package com.sopt.agoda.hotel.service;
 
+import com.sopt.agoda.common.exception.AgodaException;
+import com.sopt.agoda.common.response.message.FailMessage;
+import com.sopt.agoda.common.util.ValidatorUtils;
 import com.sopt.agoda.hotel.controller.dto.res.HotelInfo;
 import com.sopt.agoda.hotel.controller.dto.res.HotelListRes;
 import com.sopt.agoda.hotel.domain.Hotel;
@@ -30,6 +33,10 @@ public class HotelService {
             allHotels = hotelRepository.findByCityId(cityId);
         } else {
             allHotels = hotelRepository.findByCityIdAndIsTimeSaleFalse(cityId);
+        }
+
+        if (ValidatorUtils.isEmptyList(allHotels)) {
+            throw new AgodaException(FailMessage.NOT_FOUND_HOTELS);
         }
 
         final List<Long> hotelIds = allHotels.stream()
