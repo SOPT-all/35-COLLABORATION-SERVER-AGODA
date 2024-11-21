@@ -34,9 +34,20 @@ public class HotelController {
         return ApiResponseUtil.success(SuccessMessage.OK, hotelDetail);
     }
 
+
     @GetMapping("/{hotelId}/rooms")
     public ResponseEntity<BaseResponse<?>> getHotelRoomList(@PathVariable @Min(1) final Long hotelId) {
         final HotelRoomsRes hotelRoomList = hotelService.getHotelRoomList(hotelId);
         return ApiResponseUtil.success(SuccessMessage.OK, hotelRoomList);
     }
+
+    @PatchMapping("/likes/{hotelId}")
+    public ResponseEntity<BaseResponse<?>> patchHotelLike(
+            @Min(1) @PathVariable final Long hotelId,
+            @RequestParam(value = "isLiked", required = true) final boolean isLiked
+    ) {
+        hotelService.patchHotelLike(hotelId, isLiked);
+        return ApiResponseUtil.success(SuccessMessage.OK);
+    }
+
 }

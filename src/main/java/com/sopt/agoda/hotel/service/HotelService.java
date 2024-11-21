@@ -20,6 +20,7 @@ import com.sopt.agoda.room.domain.RoomImage;
 import com.sopt.agoda.room.repository.RoomImageRepository;
 import com.sopt.agoda.room.repository.RoomRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Collections;
@@ -133,5 +134,12 @@ public class HotelService {
         }).toList();
 
         return HotelRoomsRes.of(hotelRoomInfoList);
+      
+    @Transactional
+    public void patchHotelLike(final Long hotelId, final boolean isLiked) {
+        Hotel foundHotel = hotelRepository.findById(hotelId).orElseThrow(
+                () -> new AgodaException(FailMessage.NOT_FOUND_HOTEL)
+        );
+        foundHotel.setLiked(isLiked);
     }
 }
