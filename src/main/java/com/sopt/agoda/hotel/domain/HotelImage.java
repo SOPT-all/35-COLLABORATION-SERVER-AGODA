@@ -26,7 +26,7 @@ public class HotelImage {
     private String imageUrl;
 
     @Column(name = "is_thumbnail", nullable = true)
-    private boolean isThumbnail;
+    private Boolean isThumbnail;
 
     protected HotelImage() {
     }
@@ -70,4 +70,8 @@ public class HotelImage {
             return new HotelImage(this);
         }
     }
+
+    public Long getId() { return id; }
+
+    public String getImageUrl() { return imageUrl; }
 }

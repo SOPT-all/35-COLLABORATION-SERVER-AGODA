@@ -1,5 +1,6 @@
 package com.sopt.agoda.common.response.message;
 
+import com.sopt.agoda.hotel.domain.HotelImage;
 import org.springframework.http.HttpStatus;
 
 public enum FailMessage implements ApiMessage{
@@ -31,6 +32,8 @@ public enum FailMessage implements ApiMessage{
     NOT_FOUND_BEST_COUNTRY(HttpStatus.NOT_FOUND, "베스트 여행지를 찾을 수 없습니다."),
     NOT_FOUND_SEARCH_CITIES(HttpStatus.NOT_FOUND, "검색 도시 리스트를 찾을 수 없습니다."),
     NOT_FOUND_HOTELS(HttpStatus.NOT_FOUND, "호텔 리스트를 찾을 수 없습니다. "),
+    NOT_FOUND_HOTEL(HttpStatus.NOT_FOUND, "호텔 정보를 찾을 수 없습니다. "),
+    NOT_FOUND_HOTEL_IMAGES(HttpStatus.NOT_FOUND, "호텔 이미지를 찾을 수 없습니다. "),
 
     /**
      * 405 Method Not Allowed
