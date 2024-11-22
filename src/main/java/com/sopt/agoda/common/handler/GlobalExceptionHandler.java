@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -52,7 +51,7 @@ public class GlobalExceptionHandler {
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining("\n")); // 메시지를 줄바꿈으로 연결
 
-        return ApiResponseUtil.failure(HttpStatus.BAD_REQUEST, errorMessage);
+        return ApiResponseUtil.failure(FailMessage.BAD_REQUEST_REQUEST_BODY_VALID, errorMessage);
     }
 
     /**
@@ -67,7 +66,7 @@ public class GlobalExceptionHandler {
                 .map(MessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining("\n"));
 
-        return ApiResponseUtil.failure(HttpStatus.BAD_REQUEST, errorMessage);
+        return ApiResponseUtil.failure(FailMessage.BAD_REQUEST_REQUEST_PARAM_MODELATTRI, errorMessage);
     }
 
     /**
@@ -77,7 +76,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<BaseResponse<?>> handleMissingServletRequestParameterException(final MissingServletRequestParameterException e) {
         final String errorMessage = "누락된 파라미터 : " + e.getParameterName();
-        return ApiResponseUtil.failure(HttpStatus.BAD_REQUEST, errorMessage);
+        return ApiResponseUtil.failure(FailMessage.BAD_REQUEST_MISSING_PARAM, errorMessage);
     }
 
     /**
@@ -87,7 +86,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<BaseResponse<?>> handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException e) {
         final String errorMessage = "잘못된 인자값 : " + e.getParameter().getParameterName();
-        return ApiResponseUtil.failure(HttpStatus.BAD_REQUEST, errorMessage);
+        return ApiResponseUtil.failure(FailMessage.BAD_REQUEST_METHOD_ARGUMENT_TYPE, errorMessage);
     }
 
     /**
@@ -102,9 +101,9 @@ public class GlobalExceptionHandler {
                     .map(ref -> String.format("잘못된 필드 값 : '%s'", ref.getFieldName()))
                     .collect(Collectors.joining("\n"));
 
-            return ApiResponseUtil.failure(HttpStatus.BAD_REQUEST, errorMessage);
+            return ApiResponseUtil.failure(FailMessage.BAD_REQUEST_NOT_READABLE, errorMessage);
         } else { //그 외의 경우들
-            return ApiResponseUtil.failure(FailMessage.BAD_REQUEST_JSON);
+            return ApiResponseUtil.failure(FailMessage.BAD_REQUEST_NOT_READABLE);
         }
     }
 
@@ -141,7 +140,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<BaseResponse<?>> handleHttpRequestMethodNotSupportedException(final HttpRequestMethodNotSupportedException e) {
-        return ApiResponseUtil.failure(FailMessage.BAD_REQUEST_HTTP_METHOD);
+        return ApiResponseUtil.failure(FailMessage.METHOD_NOT_ALLOWED);
     }
 
     /**
@@ -156,7 +155,7 @@ public class GlobalExceptionHandler {
             String constraintName = constraintViolationException.getConstraintViolations().toString();
             String errorMessage = String.format("제약 조건 '%s' 위반이 발생했습니다.", constraintName);
             log.info(errorMessage);
-            return ApiResponseUtil.failure(HttpStatus.CONFLICT, errorMessage);
+            return ApiResponseUtil.failure(FailMessage.INTEGRITY_CONFLICT, errorMessage);
         } else {
             log.info(e.getMessage());
             return ApiResponseUtil.failure(FailMessage.INTEGRITY_CONFLICT);
@@ -169,7 +168,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<BaseResponse<?>> handleAllExceptions(final Exception e) {
         log.info(e.getMessage());
-        System.out.println(e);
        return ApiResponseUtil.failure(FailMessage.INTERNAL_SERVER_ERROR);
     }
 }

@@ -7,27 +7,27 @@ import org.springframework.http.HttpStatus;
 
 
 public class BaseResponse<T> {
-    private final int status;
+    private final int code;
     private final String message;
     @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private final T data;
 
-    private BaseResponse(int status, String message, T data) {
-        this.status = status;
+    private BaseResponse(final int status, final String message, final T data) {
+        this.code = status;
         this.message = message;
         this.data = data;
     }
 
     public static BaseResponse<?> of(SuccessMessage successMessage) {
         return builder()
-                .status(successMessage.getHttpStatus().value())
+                .status(successMessage.getCode())
                 .message(successMessage.getMessage())
                 .build();
     }
 
     public static <T> BaseResponse<?> of(SuccessMessage successMessage, T data) {
         return builder()
-                .status(successMessage.getHttpStatus().value())
+                .status(successMessage.getCode())
                 .message(successMessage.getMessage())
                 .data(data)
                 .build();
@@ -35,40 +35,40 @@ public class BaseResponse<T> {
 
     public static BaseResponse<?> of(FailMessage failMessage) {
         return builder()
-                .status(failMessage.getHttpStatus().value())
+                .status(failMessage.getCode())
                 .message(failMessage.getMessage())
                 .build();
     }
 
-    public static BaseResponse<?> of(HttpStatus httpStatus, String message) {
+    public static BaseResponse<?> of(final int code, final String message) {
         return builder()
-                .status(httpStatus.value())
+                .status(code)
                 .message(message)
                 .build();
     }
 
     public static class Builder<T> {
-        private int status;
+        private int code;
         private String message;
         private T data;
 
-        public Builder<T> status(int status) {
-            this.status = status;
+        public Builder<T> status(final int status) {
+            this.code = status;
             return this;
         }
 
-        public Builder<T> message(String message) {
+        public Builder<T> message(final String message) {
             this.message = message;
             return this;
         }
 
-        public Builder<T> data(T data) {
+        public Builder<T> data(final T data) {
             this.data = data;
             return this;
         }
 
         public BaseResponse<T> build() {
-            return new BaseResponse<>(status, message, data);
+            return new BaseResponse<>(code, message, data);
         }
     }
 
@@ -76,8 +76,8 @@ public class BaseResponse<T> {
         return new Builder<>();
     }
 
-    public int getStatus() {
-        return status;
+    public int getCode() {
+        return code;
     }
 
     public String getMessage() {
