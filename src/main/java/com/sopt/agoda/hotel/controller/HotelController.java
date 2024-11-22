@@ -17,13 +17,15 @@ import org.springframework.web.bind.annotation.*;
 public class HotelController {
     private final HotelService hotelService;
 
-    public HotelController(HotelService hotelService) { this.hotelService = hotelService; }
+    public HotelController(HotelService hotelService) {
+        this.hotelService = hotelService;
+    }
 
     @GetMapping()
     public ResponseEntity<BaseResponse<?>> getHotelList(
-            @RequestParam(value="saleType", required = true) final SaleType saleType,
-            @RequestParam(value="cityId", required = true) @Min(1) final Long cityId
-            ) {
+            @RequestParam(value = "saleType", required = true) final SaleType saleType,
+            @RequestParam(value = "cityId", required = true) @Min(1) final Long cityId
+    ) {
         final HotelListRes hotels = hotelService.getHotelList(saleType, cityId);
         return ApiResponseUtil.success(SuccessMessage.OK, hotels);
     }
@@ -47,7 +49,11 @@ public class HotelController {
             @RequestParam(value = "isLiked", required = true) final boolean isLiked
     ) {
         hotelService.patchHotelLike(hotelId, isLiked);
-        return ApiResponseUtil.success(SuccessMessage.OK);
+        if (isLiked) {
+            return ApiResponseUtil.success(SuccessMessage.OK_HOTEL_LIKE);
+        } else {
+            return ApiResponseUtil.success(SuccessMessage.OK_HOTEL_UNLIKE
+            );
+        }
     }
-
 }
