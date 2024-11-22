@@ -4,25 +4,15 @@ import com.sopt.agoda.common.exception.AgodaException;
 import com.sopt.agoda.common.response.message.FailMessage;
 
 public enum SaleType {
-    DEFAULT("default"),
-    TIME_LIMIT("timeLimit");
+    DEFAULT,
+    TIME_LIMIT;
 
-    private final String value;
-
-    SaleType(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public static SaleType fromString(String value) {
-        for (SaleType saleType : values()) {
-            if (saleType.getValue().equalsIgnoreCase(value)) {
-                return saleType;
+    public static SaleType create(String requestCategory) {
+        for (SaleType value : SaleType.values()) {
+            if (value.toString().equals(requestCategory)) {
+                return value;
             }
         }
-        throw new AgodaException(FailMessage.BAD_REQUEST_SALETYPE_PARAMETER_VALUE);
+        throw new AgodaException(FailMessage.BAD_REQUEST_SALETYPE_VALUE);
     }
 }
