@@ -8,6 +8,6 @@ public class SaleTypeConverter implements Converter<String, SaleType> {
 
     @Override
     public SaleType convert(@NonNull final String saleType) {
-        return SaleType.fromString(saleType);
+        return SaleType.create(saleType.toUpperCase());
     }
 }
