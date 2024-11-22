@@ -12,13 +12,7 @@ public enum FailMessage implements ApiMessage{
     BAD_REQUEST_MISSING_PARAM(HttpStatus.BAD_REQUEST, 40003, "필수 param이 없습니다."),
     BAD_REQUEST_METHOD_ARGUMENT_TYPE(HttpStatus.BAD_REQUEST, 40004, "메서드 인자타입이 잘못되었습니다."),
     BAD_REQUEST_NOT_READABLE(HttpStatus.BAD_REQUEST, 40005, "json 오류 혹은 reqeust body 필드 오류 입니다."),
-
-
-
-
-    BAD_REQUEST_PARAMETER_VALUE(HttpStatus.BAD_REQUEST, 40001, "유효하지 않은 요청 파라미터 값입니다."),
-    BAD_REQUEST_JSON(HttpStatus.BAD_REQUEST, 40002, "잘못된 JSON 형식입니다."),
-    BAD_REQUEST_SALETYPE_VALUE(HttpStatus.BAD_REQUEST,40003, "잘못된 SaleType입니다."),
+    BAD_REQUEST_SALETYPE_VALUE(HttpStatus.BAD_REQUEST,40006, "잘못된 SaleType입니다."),
 
     /**
      * 401 Unauthorized
@@ -34,19 +28,19 @@ public enum FailMessage implements ApiMessage{
      * 404 Not Found
      */
     NOT_FOUND_ENTITY(HttpStatus.NOT_FOUND,40400, "대상을 찾을 수 없습니다."),
-    NOT_FOUND_API(HttpStatus.NOT_FOUND, 40401, "잘못된 API입니다.."),
+    NOT_FOUND_API(HttpStatus.NOT_FOUND, 40401, "잘못된 API입니다."),
     NOT_FOUND_POPULAR_CITIES(HttpStatus.NOT_FOUND, 40402, "인기 도시를 찾을 수 없습니다."),
     NOT_FOUND_BEST_COUNTRY(HttpStatus.NOT_FOUND, 40403, "베스트 여행지를 찾을 수 없습니다."),
     NOT_FOUND_SEARCH_CITIES(HttpStatus.NOT_FOUND, 40404, "검색 도시 리스트를 찾을 수 없습니다."),
-    NOT_FOUND_HOTELS(HttpStatus.NOT_FOUND, 40405, "호텔 리스트를 찾을 수 없습니다. "),
-    NOT_FOUND_HOTEL(HttpStatus.NOT_FOUND, 40406, "호텔 정보를 찾을 수 없습니다. "),
-    NOT_FOUND_HOTEL_IMAGES(HttpStatus.NOT_FOUND, 40407, "호텔 이미지를 찾을 수 없습니다. "),
-    NOT_FOUND_ROOM(HttpStatus.NOT_FOUND, 40408, "방 정보를 찾을 수 없습니다. "),
-    NOT_FOUND_ROOM_IMAGES(HttpStatus.NOT_FOUND, 40409, "방 이미지를 찾을 수 없습니다. "),
+    NOT_FOUND_HOTELS(HttpStatus.NOT_FOUND, 40405, "호텔 리스트를 찾을 수 없습니다."),
+    NOT_FOUND_HOTEL(HttpStatus.NOT_FOUND, 40406, "호텔 정보를 찾을 수 없습니다."),
+    NOT_FOUND_HOTEL_IMAGES(HttpStatus.NOT_FOUND, 40407, "호텔 이미지를 찾을 수 없습니다."),
+    NOT_FOUND_ROOM(HttpStatus.NOT_FOUND, 40408, "방 정보를 찾을 수 없습니다."),
+    NOT_FOUND_ROOM_IMAGES(HttpStatus.NOT_FOUND, 40409, "방 이미지를 찾을 수 없습니다."),
     /**
      * 405 Method Not Allowed
      */
-    METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, 40400, "잘못된 HTTP method 요청입니다."),
+    METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, 40500, "잘못된 HTTP method 요청입니다."),
 
     /**
      * 409 Conflict
