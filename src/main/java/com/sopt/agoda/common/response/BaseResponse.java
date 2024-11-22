@@ -1,9 +1,8 @@
 package com.sopt.agoda.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sopt.agoda.common.response.message.FailMessage;
+import com.sopt.agoda.common.response.message.ApiMessage;
 import com.sopt.agoda.common.response.message.SuccessMessage;
-import org.springframework.http.HttpStatus;
 
 
 public class BaseResponse<T> {
@@ -18,61 +17,54 @@ public class BaseResponse<T> {
         this.data = data;
     }
 
-    public static BaseResponse<?> of(SuccessMessage successMessage) {
+    public static BaseResponse<?> of(final ApiMessage apiMessage) {
         return builder()
-                .status(successMessage.getCode())
-                .message(successMessage.getMessage())
+                .code(apiMessage.getCode())
+                .message(apiMessage.getMessage())
                 .build();
     }
 
     public static <T> BaseResponse<?> of(SuccessMessage successMessage, T data) {
         return builder()
-                .status(successMessage.getCode())
+                .code(successMessage.getCode())
                 .message(successMessage.getMessage())
                 .data(data)
                 .build();
     }
 
-    public static BaseResponse<?> of(FailMessage failMessage) {
-        return builder()
-                .status(failMessage.getCode())
-                .message(failMessage.getMessage())
-                .build();
-    }
-
     public static BaseResponse<?> of(final int code, final String message) {
         return builder()
-                .status(code)
+                .code(code)
                 .message(message)
                 .build();
     }
 
-    public static class Builder<T> {
+    private static class Builder<T> {
         private int code;
         private String message;
         private T data;
 
-        public Builder<T> status(final int status) {
-            this.code = status;
+        private Builder<T> code(final int code) {
+            this.code = code;
             return this;
         }
 
-        public Builder<T> message(final String message) {
+        private Builder<T> message(final String message) {
             this.message = message;
             return this;
         }
 
-        public Builder<T> data(final T data) {
+        private Builder<T> data(final T data) {
             this.data = data;
             return this;
         }
 
-        public BaseResponse<T> build() {
+        private BaseResponse<T> build() {
             return new BaseResponse<>(code, message, data);
         }
     }
 
-    public static <T> Builder<T> builder() {
+    private static <T> Builder<T> builder() {
         return new Builder<>();
     }
 
