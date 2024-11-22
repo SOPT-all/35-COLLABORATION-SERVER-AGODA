@@ -7,9 +7,9 @@ public enum SaleType {
     DEFAULT,
     TIME_LIMIT;
 
-    public static SaleType create(String requestCategory) {
+    public static SaleType create(final String requestSaleType) {
         for (SaleType value : SaleType.values()) {
-            if (value.toString().equals(requestCategory)) {
+            if (value.toString().equals(requestSaleType)) {
                 return value;
             }
         }
