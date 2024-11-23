@@ -43,7 +43,7 @@ public class Room {
 
     @Column(name = "hotel_id", nullable = false)
     @NotNull(message = "호텔 아이디가 null이면 안됩니다.")
-    private Long hotelId;
+    private long hotelId;
 
     protected Room() {}
 
@@ -58,7 +58,7 @@ public class Room {
     }
 
     public static Room create(final String name, final int spaceSize, final String bedType, final int bedCount,
-                              final String bathInfo, final int maxCapacity, final Long hotelId) {
+                              final String bathInfo, final int maxCapacity, final long hotelId) {
         return new Builder()
                 .name(name)
                 .spaceSize(spaceSize)
@@ -78,7 +78,7 @@ public class Room {
         private int bedCount;
         private String bathInfo;
         private int maxCapacity;
-        private Long hotelId;
+        private long hotelId;
 
         public Builder name(final String name) {
             this.name = name;
@@ -110,7 +110,7 @@ public class Room {
             return this;
         }
 
-        public Builder hotelId(final Long hotelId) {
+        public Builder hotelId(final long hotelId) {
             this.hotelId = hotelId;
             return this;
         }

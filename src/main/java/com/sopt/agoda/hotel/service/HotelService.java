@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -115,7 +116,7 @@ public class HotelService {
 
         List<HotelRoomInfo> hotelRoomInfoList = rooms.stream().map(room -> {
             List<HotelRoomImage> imagesForRoom = roomImageList.stream()
-                    .filter(roomImage -> roomImage.getRoomId().equals(room.getId()))
+                    .filter(roomImage -> Objects.equals(roomImage.getRoomId(), room.getId()))
                     .map(roomImage -> new HotelRoomImage(
                             roomImage.getId(),
                             roomImage.getImageUrl()

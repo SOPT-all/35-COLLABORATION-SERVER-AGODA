@@ -70,7 +70,7 @@ public class Hotel {
 
     @Column(name = "city_id", nullable = false)
     @NotNull(message = "도시 아이디가 null이면 안됩니다.")
-    private Long cityId;
+    private long cityId;
 
     protected Hotel() {}
 
@@ -93,7 +93,7 @@ public class Hotel {
     public static Hotel create(final String hotelName, final int star, final String hotelDistrict, final double rating,
                                final int reviewCount, final int originalPrice, final int discountPrice,
                                final boolean isQuarterDiscount, final int taxPrice, final boolean isLiked,
-                               final int reservationCount, final boolean isTimeSale, final Long cityId) {
+                               final int reservationCount, final boolean isTimeSale, final long cityId) {
         return new Hotel.Builder()
                 .hotelName(hotelName)
                 .star(star)
@@ -125,7 +125,7 @@ public class Hotel {
         private boolean isLiked;
         private int reservationCount;
         private boolean isTimeSale;
-        private Long cityId;
+        private long cityId;
 
         public Builder hotelName(final String hotelName) {
             this.hotelName = hotelName;
@@ -187,7 +187,7 @@ public class Hotel {
             return this;
         }
 
-        public Builder cityId(final Long cityId) {
+        public Builder cityId(final long cityId) {
             this.cityId = cityId;
             return this;
         }

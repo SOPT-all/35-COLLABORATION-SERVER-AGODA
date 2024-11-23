@@ -30,18 +30,18 @@ public class City {
 
     @Column(name = "country_id")
     @NotNull(message = "나라 아이디가 null이 될 수 없습니다.")
-    private Long countryId;
+    private long countryId;
 
     protected City() {}
 
-    private City(final String name, final int hotelCount, final String imageUrl, final Long countryId) {
+    private City(final String name, final int hotelCount, final String imageUrl, final long countryId) {
         this.name = name;
         this.hotelCount = hotelCount;
         this.imageUrl = imageUrl;
         this.countryId = countryId;
     }
 
-    public static City create(final String name, final String imageUrl, final int hotelCount, final Long countryId) {
+    public static City create(final String name, final String imageUrl, final int hotelCount, final long countryId) {
         return new City.Builder()
                 .name(name)
                 .imageUrl(imageUrl)
@@ -54,7 +54,7 @@ public class City {
         private String name;
         private int hotelCount;
         private String imageUrl;
-        private Long countryId;
+        private long countryId;
 
         public Builder name(String name) {
             this.name = name;
@@ -71,7 +71,7 @@ public class City {
             return this;
         }
 
-        public Builder countryId(Long countryId) {
+        public Builder countryId(long countryId) {
             this.countryId = countryId;
             return this;
         }
@@ -97,7 +97,7 @@ public class City {
         return imageUrl;
     }
 
-    public Long getCountryId() {
+    public long getCountryId() {
         return countryId;
     }
 }

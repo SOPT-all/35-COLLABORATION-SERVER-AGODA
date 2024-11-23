@@ -19,7 +19,7 @@ public class HotelImage {
 
     @Column(name = "hotel_id", nullable = false)
     @NotNull(message = "호텔 ID가 null이면 안됩니다.")
-    private Long hotelId;
+    private long hotelId;
 
     @Column(name = "hotel_image_url", nullable = false)
     @NotBlank(message = "호텔 이미지 URL이 null이면 안됩니다.")
@@ -37,7 +37,7 @@ public class HotelImage {
         this.isThumbnail = builder.isThumbnail;
     }
 
-    public static HotelImage create(final Long hotelId, final String hotelImageUrl, final boolean isThumbnail) {
+    public static HotelImage create(final long hotelId, final String hotelImageUrl, final boolean isThumbnail) {
         return new Builder()
                 .hotelId(hotelId)
                 .hotelImageUrl(hotelImageUrl)
@@ -47,11 +47,11 @@ public class HotelImage {
 
     // 빌더 클래스
     public static class Builder {
-        private Long hotelId;
+        private long hotelId;
         private String hotelImageUrl;
         private boolean isThumbnail;
 
-        public Builder hotelId(final Long hotelId) {
+        public Builder hotelId(final long hotelId) {
             this.hotelId = hotelId;
             return this;
         }
