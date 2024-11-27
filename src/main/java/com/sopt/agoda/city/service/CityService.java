@@ -26,7 +26,7 @@ public class CityService {
     public PopularCitiesRes getPopularCities() {
         final List<City> foundCities = cityRepository.findAll();
         //빈 값인지 검증
-        if (ValidatorUtils.isEmptyList(foundCities)) {
+        if (checkIfEmptyCityList(foundCities)) {
             throw new AgodaException(FailMessage.NOT_FOUND_POPULAR_CITIES);
         }
 
@@ -39,7 +39,7 @@ public class CityService {
     public CitiesRes getCities() {
         final List<City> foundCities = cityRepository.findAll();
         //빈 값인지 검증
-        if (ValidatorUtils.isEmptyList(foundCities)) {
+        if (checkIfEmptyCityList(foundCities)) {
             throw new AgodaException(FailMessage.NOT_FOUND_SEARCH_CITIES);
         }
 
@@ -51,5 +51,9 @@ public class CityService {
                 }
         ).toList();
         return CitiesRes.of(searchCityInfos);
+    }
+
+    private boolean checkIfEmptyCityList(final List<City> foundCities) {
+        return ValidatorUtils.isEmptyList(foundCities);
     }
 }
