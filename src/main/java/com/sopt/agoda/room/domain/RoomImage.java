@@ -18,7 +18,7 @@ public class RoomImage {
 
     @Column(name = "room_id", nullable = false)
     @NotNull(message = "방 ID가 null이면 안됩니다.")
-    private Long roomId;
+    private long roomId;
 
     protected RoomImage() {
     }
@@ -28,7 +28,7 @@ public class RoomImage {
         this.roomId = builder.roomId;
     }
 
-    public static RoomImage create(final String roomImageUrl, final Long roomId) {
+    public static RoomImage create(final String roomImageUrl, final long roomId) {
         return new Builder()
                 .roomImageUrl(roomImageUrl)
                 .roomId(roomId)
@@ -45,7 +45,7 @@ public class RoomImage {
             return this;
         }
 
-        public Builder roomId(final Long roomId) {
+        public Builder roomId(final long roomId) {
             this.roomId = roomId;
             return this;
         }
@@ -55,7 +55,7 @@ public class RoomImage {
         }
     }
 
-    public Long getRoomId() {
+    public long getRoomId() {
         return roomId;
     }
 
