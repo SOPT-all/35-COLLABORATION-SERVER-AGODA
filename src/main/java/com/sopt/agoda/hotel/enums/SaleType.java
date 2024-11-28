@@ -3,16 +3,22 @@ package com.sopt.agoda.hotel.enums;
 import com.sopt.agoda.common.exception.AgodaException;
 import com.sopt.agoda.common.response.message.FailMessage;
 
+import java.util.Arrays;
+
 public enum SaleType {
-    DEFAULT,
-    TIME_LIMIT;
+    DEFAULT("default"),
+    TIME_LIMIT("timeLimit");
+
+    private final String value;
+
+    SaleType(String value) {
+        this.value = value;
+    }
 
     public static SaleType create(final String requestSaleType) {
-        for (SaleType value : SaleType.values()) {
-            if (value.toString().equals(requestSaleType)) {
-                return value;
-            }
-        }
-        throw new AgodaException(FailMessage.BAD_REQUEST_SALETYPE_VALUE);
+        return Arrays.stream(SaleType.values())
+                .filter(saleType -> saleType.value.equalsIgnoreCase(requestSaleType))
+                .findFirst()
+                .orElseThrow(() -> new AgodaException(FailMessage.BAD_REQUEST_SALETYPE_VALUE));
     }
 }
